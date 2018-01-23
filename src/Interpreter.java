@@ -2,44 +2,75 @@ public class Interpreter{
     private String text;
     private Integer pos;
     private Token currentToken;
+    private char currentChar;
 
     Interpreter(String text){
         this.text = text;
         this.pos = 0;
         this.currentToken = null;
+        this.currentChar = this.text.charAt(this.pos);
     }
 
     private void error(){
         throw new java.lang.RuntimeException("Error parsing input");
     }
 
+    private void advanceCounter(){
+        this.pos ++;
+        if(this.pos > text.length()-1){
+          this.currentChar = '\0';
+        } else {
+            this.currentChar = this.text.charAt(this.pos);
+        }
+    }
+
+    private void whitespaceSkipper(){
+        while(this.currentChar != '\0' && Character.isWhitespace(this.currentChar)){
+            this.advanceCounter();
+        }
+    }
+
+    private Integer integer(){
+        String integerInProgress = "";
+        while(this.currentChar != '\0' && Character.isDigit(this.currentChar)){
+            integerInProgress += this.currentChar;
+            this.advanceCounter();
+        }
+        return Integer.parseInt(integerInProgress);
+    }
+
     private Token getNextToken(){
 
-        // want to remove and export this gaurd into a new function
-        if(this.pos > text.length()-1){
-            return new Token("EOF", null);
+        while(this.currentChar != '\0'){
+
+            if(Character.isWhitespace(this.currentChar)){
+                this.whitespaceSkipper();
+                continue;
+            }
+            if(Character.isDigit(this.currentChar)){
+                Token token = new Token("INT", this.integer());
+                return token;
+            }
+            if(this.currentChar == '+'){
+                this.advanceCounter();
+                Token token = new Token("PLUS", currentChar);
+                return token;
+            }
+            if(this.currentChar == '-'){
+                this.advanceCounter();
+                Token token = new Token("MINUS", currentChar);
+                return token;
+            }
+            else {
+                this.error();
+            }
         }
-
-        String text = this.text;
-        Token outputToken = new Token("placeholder", null);
-        char currentChar = text.charAt(this.pos);
-
-        if(Character.isDigit(currentChar)){
-            Token token = new Token("INT", Character.getNumericValue(currentChar));
-            this.pos ++;
-            outputToken = token;
-        } else if (currentChar == '+'){
-            Token token = new Token("PLUS", currentChar);
-            this.pos ++;
-            outputToken = token;
-        }
-
-        return outputToken;
+        return new Token("EOF", null);
     }
 
 
     private void eat(String tokenType){
-        if(this.currentToken.type == tokenType){
+        if(this.currentToken.type.equals(tokenType)){
             this.currentToken = this.getNextToken();
         } else {
             this.error();
@@ -53,16 +84,29 @@ public class Interpreter{
         this.eat("INT");
 
         Token op = this.currentToken;
-        this.eat("PLUS");
+        if(op.type.equals("PLUS")){
+            this.eat("PLUS");
+        } else {
+            this.eat("MINUS");
+        }
 
         Token right = this.currentToken;
         this.eat("INT");
 
-        return simpleAddition(left, right);
+        if(op.type.equals("PLUS")){
+            return simpleAddition(left, right);
+        } else {
+            return simpleSubtraction(left, right);
+        }
     }
 
     private Integer simpleAddition(Token inputOne, Token inputTwo) {
         Integer result = (Integer) inputOne.value + (Integer) inputTwo.value;
+        return result;
+    }
+
+    private Integer simpleSubtraction(Token inputOne, Token inputTwo) {
+        Integer result = (Integer) inputOne.value - (Integer) inputTwo.value;
         return result;
     }
 
