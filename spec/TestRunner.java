@@ -13,10 +13,12 @@ public class TestRunner {
     public static void main(String[] args) {
         ArrayList<Test> testArray = new ArrayList<Test>();
         Assertion asserter = new Assertion();
-        Test test1 = new Test("1+1", 2);
-        testArray.add(test1);
-        Test test2 = new Test("3+3", 7);
-        testArray.add(test2);
+        new Test("1+1", 2, testArray);
+        new Test("3 + 3", 6, testArray);
+        new Test("1    +   1", 2, testArray);
+        new Test("1 + 1  ", 2, testArray);
+        new Test("1111 + 1111", 2222, testArray);
+        new Test("3 - 1", 2, testArray);
         runTests(testArray);
     }
 
