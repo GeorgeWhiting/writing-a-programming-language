@@ -61,6 +61,11 @@ public class Interpreter{
                 Token token = new Token("MINUS", currentChar);
                 return token;
             }
+            if (this.currentChar == '*') {
+                this.advanceCounter();
+                Token token = new Token("MULTIPLY", currentChar);
+                return token;
+            }
             else {
                 this.error();
             }
@@ -86,8 +91,10 @@ public class Interpreter{
         Token op = this.currentToken;
         if(op.type.equals("PLUS")){
             this.eat("PLUS");
-        } else {
+        } else if (op.type.equals("MINUS")) {
             this.eat("MINUS");
+        } else if (op.type.equals("MULTIPLY")) {
+            this.eat("MULTIPLY");
         }
 
         Token right = this.currentToken;
@@ -95,8 +102,10 @@ public class Interpreter{
 
         if(op.type.equals("PLUS")){
             return simpleAddition(left, right);
-        } else {
+        } else if (op.type.equals("MINUS")) {
             return simpleSubtraction(left, right);
+        }  else {
+            return simpleMultiplication(left, right);
         }
     }
 
@@ -107,6 +116,11 @@ public class Interpreter{
 
     private Integer simpleSubtraction(Token inputOne, Token inputTwo) {
         Integer result = (Integer) inputOne.value - (Integer) inputTwo.value;
+        return result;
+    }
+
+    private Integer simpleMultiplication(Token inputOne, Token inputTwo) {
+        Integer result = (Integer) inputOne.value * (Integer) inputTwo.value;
         return result;
     }
 

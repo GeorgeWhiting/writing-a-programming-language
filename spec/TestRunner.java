@@ -21,6 +21,8 @@ public class TestRunner {
         new Test("1 + 1  ", 2, testArray);
         new Test("1111 + 1111", 2222, testArray);
         new Test("3 - 1", 2, testArray);
+        new Test("3*3", 9, testArray);
+        new Test("    6 * 12", 72, testArray);
         runTests(testArray);
     }
 
