@@ -1,7 +1,7 @@
 public class Interpreter{
-    String text;
-    Integer pos;
-    Token currentToken;
+    private String text;
+    private Integer pos;
+    private Token currentToken;
 
     Interpreter(String text){
         this.text = text;
@@ -9,27 +9,26 @@ public class Interpreter{
         this.currentToken = null;
     }
 
-    public void error(){
+    private void error(){
         throw new java.lang.RuntimeException("Error parsing input");
     }
 
-    public Token getNextToken(){
-        String text = this.text;
-        Token outputToken = new Token("placeholder", null);
+    private Token getNextToken(){
 
+        // want to remove and export this gaurd into a new function
         if(this.pos > text.length()-1){
             return new Token("EOF", null);
         }
 
+        String text = this.text;
+        Token outputToken = new Token("placeholder", null);
         char currentChar = text.charAt(this.pos);
 
         if(Character.isDigit(currentChar)){
             Token token = new Token("INT", Character.getNumericValue(currentChar));
             this.pos ++;
             outputToken = token;
-        }
-
-        if(currentChar == '+'){
+        } else if (currentChar == '+'){
             Token token = new Token("PLUS", currentChar);
             this.pos ++;
             outputToken = token;
@@ -38,7 +37,8 @@ public class Interpreter{
         return outputToken;
     }
 
-    public void eat(String tokenType){
+
+    private void eat(String tokenType){
         if(this.currentToken.type == tokenType){
             this.currentToken = this.getNextToken();
         } else {
@@ -57,7 +57,13 @@ public class Interpreter{
 
         Token right = this.currentToken;
         this.eat("INT");
-        Integer result = (Integer) left.value + (Integer) right.value;
+
+        return simpleAddition(left, right);
+    }
+
+    private Integer simpleAddition(Token inputOne, Token inputTwo) {
+        Integer result = (Integer) inputOne.value + (Integer) inputTwo.value;
         return result;
     }
+
 }
