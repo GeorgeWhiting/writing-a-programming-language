@@ -14,7 +14,7 @@ public class Main {
                 break;
             }
             Interpreter interpreter = new Interpreter(input);
-            Integer result = interpreter.expr();
+            Object result = interpreter.expr();
             System.out.println(result);
         }
 

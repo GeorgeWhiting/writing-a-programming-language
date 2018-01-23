@@ -32,7 +32,7 @@ public class Interpreter{
 
     private Integer integer(){
         String integerInProgress = "";
-        while(this.currentChar != '\0' && Character.isDigit(this.currentChar)){
+        while(Character.isDigit(this.currentChar)){
             integerInProgress += this.currentChar;
             this.advanceCounter();
         }
@@ -77,7 +77,7 @@ public class Interpreter{
         }
     }
 
-    public Integer expr(){
+    public Object expr(){
         this.currentToken = this.getNextToken();
 
         Token left = this.currentToken;
