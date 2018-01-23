@@ -82,46 +82,34 @@ public class Interpreter{
         }
     }
 
+    private Object term() {
+        Token token = this.currentToken;
+        this.eat("INT");
+        return token.value;
+    }
+
     public Object expr(){
         this.currentToken = this.getNextToken();
 
-        Token left = this.currentToken;
-        this.eat("INT");
+        Object result = this.term();
 
-        Token op = this.currentToken;
-        if(op.type.equals("PLUS")){
-            this.eat("PLUS");
-        } else if (op.type.equals("MINUS")) {
-            this.eat("MINUS");
-        } else if (op.type.equals("MULTIPLY")) {
-            this.eat("MULTIPLY");
+        while(this.currentToken.type.equals("PLUS") || this.currentToken.type.equals("MINUS") || this.currentToken.type.equals("MULTIPLY")){
+            Token token = this.currentToken;
+            if(token.type.equals("PLUS")) {
+                this.eat("PLUS");
+                result = (Integer) result + (Integer) this.term();
+            } else if(token.type.equals("MINUS")) {
+                this.eat("MINUS");
+                result = (Integer) result - (Integer) this.term();
+            } else if(token.type.equals("MULTIPLY")) {
+                this.eat("MULTIPLY");
+                result = (Integer) result * (Integer) this.term();
+            }
         }
 
-        Token right = this.currentToken;
-        this.eat("INT");
-
-        if(op.type.equals("PLUS")){
-            return simpleAddition(left, right);
-        } else if (op.type.equals("MINUS")) {
-            return simpleSubtraction(left, right);
-        }  else {
-            return simpleMultiplication(left, right);
-        }
-    }
-
-    private Integer simpleAddition(Token inputOne, Token inputTwo) {
-        Integer result = (Integer) inputOne.value + (Integer) inputTwo.value;
-        return result;
-    }
-
-    private Integer simpleSubtraction(Token inputOne, Token inputTwo) {
-        Integer result = (Integer) inputOne.value - (Integer) inputTwo.value;
-        return result;
-    }
-
-    private Integer simpleMultiplication(Token inputOne, Token inputTwo) {
-        Integer result = (Integer) inputOne.value * (Integer) inputTwo.value;
         return result;
     }
 
 }
+
+
