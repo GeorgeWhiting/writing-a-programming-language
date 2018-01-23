@@ -7,6 +7,7 @@ public class TestRunner {
             System.out.println("Test " + i );
             String toPrint = Assertion.assertTest(array.get(i-1).assertion, array.get(i-1).expected);
             System.out.println(toPrint);
+            System.out.println();
         }
     }
 
@@ -15,6 +16,7 @@ public class TestRunner {
         Assertion asserter = new Assertion();
         new Test("1+1", 2, testArray);
         new Test("3 + 3", 6, testArray);
+        new Test("333 + 333", 666, testArray);
         new Test("1    +   1", 2, testArray);
         new Test("1 + 1  ", 2, testArray);
         new Test("1111 + 1111", 2222, testArray);
