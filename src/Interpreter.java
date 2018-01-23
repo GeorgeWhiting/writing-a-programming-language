@@ -61,6 +61,9 @@ public class Interpreter{
                 Token token = new Token("MINUS", currentChar);
                 return token;
             }
+            else {
+                this.error();
+            }
         }
         return new Token("EOF", null);
     }
