@@ -15,7 +15,7 @@ public class Interpreter{
 
     public Token getNextToken(){
         String text = this.text;
-        Token tokens = new Token("placeholder", null);
+        Token outputToken = new Token("placeholder", null);
 
         if(this.pos > text.length()-1){
             return new Token("EOF", null);
@@ -26,16 +26,16 @@ public class Interpreter{
         if(Character.isDigit(currentChar)){
             Token token = new Token("INT", Character.getNumericValue(currentChar));
             this.pos ++;
-            tokens = token;
+            outputToken = token;
         }
 
         if(currentChar == '+'){
             Token token = new Token("PLUS", currentChar);
             this.pos ++;
-            tokens = token;
+            outputToken = token;
         }
 
-        return tokens;
+        return outputToken;
     }
 
     public void eat(String tokenType){
