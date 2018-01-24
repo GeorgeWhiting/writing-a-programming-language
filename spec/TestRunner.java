@@ -26,6 +26,11 @@ public class TestRunner {
         new Test("1 + 5", "1", testArray);
         new Test("713 + 1230", "713", testArray);
         new Test("1 + 2 * 2", 5, testArray);
+        new Test("3/3", 1, testArray);
+        new Test("1+(3*3)", 10, testArray);
+        new Test("1+((3*3)+4)", 14, testArray);
+        new Test("1+((3/3)*4)", 5, testArray);
+        new Test("(1+((3/3)*4))+3", 8, testArray);
         runTests(testArray);
     }
 

@@ -23,9 +23,17 @@ public class Interpreter{
     }
 
     private Object factor() {
+        Object result = null;
         Token token = this.currentToken;
-        this.eat("INT");
-        return token.value;
+        if (token.type == "INT") {
+            this.eat("INT");
+            result = token.value;
+        } else if (token.type == "LPAREN") {
+            this.eat("LPAREN");
+            result = this.expr();
+            this.eat("RPAREN");
+        }
+        return result;
     }
 
     public Object expr(){
@@ -43,7 +51,6 @@ public class Interpreter{
                 result = (Integer) result - (Integer) this.term();
             }
         }
-
 
         return result;
     }
