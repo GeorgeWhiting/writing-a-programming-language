@@ -7,7 +7,7 @@ public class Interpreter{
 
     Interpreter(Lexer lexer){
         this.lexer = lexer;
-        this.currentToken = null;
+        this.currentToken = this.lexer.getNextToken();
     }
 
     private void error(){
@@ -15,6 +15,7 @@ public class Interpreter{
     }
 
     private void eat(String tokenType){
+       // System.out.println(this.currentToken.type);
         if(this.currentToken.type.equals(tokenType)){
             this.currentToken = this.lexer.getNextToken();
         } else {
@@ -22,18 +23,18 @@ public class Interpreter{
         }
     }
 
-    private Object term() {
+    private Object factor() {
         Token token = this.currentToken;
         this.eat("INT");
         return token.value;
     }
 
     public Object expr(){
-        this.currentToken = this.lexer.getNextToken();
+
 
         Object result = this.term();
 
-        while(this.currentToken.type.equals("PLUS") || this.currentToken.type.equals("MINUS") || this.currentToken.type.equals("MULTIPLY")){
+        while(this.currentToken.type.equals("PLUS") || this.currentToken.type.equals("MINUS")){
             Token token = this.currentToken;
             if(token.type.equals("PLUS")) {
                 this.eat("PLUS");
@@ -41,9 +42,23 @@ public class Interpreter{
             } else if(token.type.equals("MINUS")) {
                 this.eat("MINUS");
                 result = (Integer) result - (Integer) this.term();
-            } else if(token.type.equals("MULTIPLY")) {
+            }
+        }
+
+
+        return result;
+    }
+
+    public Object term(){
+
+
+        Object result = this.factor();
+
+        while(this.currentToken.type.equals("MULTIPLY")) {
+            Token token = this.currentToken;
+            if (token.type.equals("MULTIPLY")) {
                 this.eat("MULTIPLY");
-                result = (Integer) result * (Integer) this.term();
+                result = (Integer) result * (Integer) this.factor();
             }
         }
 
