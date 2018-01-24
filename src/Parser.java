@@ -20,57 +20,63 @@ public class Parser {
         }
     }
 
-    private Object factor() {
-        Object result = null;
+    private ASTree factor() {
         Token token = this.currentToken;
-        if (token.type == "INT") {
+        ASTree node = null;
+        if (token.type.equals("INT")) {
             this.eat("INT");
-            result = token.value;
-        } else if (token.type == "LPAREN") {
+            node = new Num(token);
+        } else if (token.type.equals("LPAREN")) {
             this.eat("LPAREN");
-            result = this.expr();
+            node = this.expr();
             this.eat("RPAREN");
         }
-        return result;
+        return node;
     }
 
-    public Object expr(){
+    public ASTree term(){
 
 
-        Object result = this.term();
-
-        while(this.currentToken.type.equals("PLUS") || this.currentToken.type.equals("MINUS")){
-            Token token = this.currentToken;
-            if(token.type.equals("PLUS")) {
-                this.eat("PLUS");
-                result = (Integer) result + (Integer) this.term();
-            } else if(token.type.equals("MINUS")) {
-                this.eat("MINUS");
-                result = (Integer) result - (Integer) this.term();
-            }
-        }
-
-        return result;
-    }
-
-    public Object term(){
-
-
-        Object result = this.factor();
+        ASTree node = this.factor();
 
         while(this.currentToken.type.equals("MULTIPLY") || this.currentToken.type.equals("DIVIDE")){
             Token token = this.currentToken;
             if (token.type.equals("MULTIPLY")) {
                 this.eat("MULTIPLY");
-                result = (Integer) result * (Integer) this.factor();
             } else if(token.type.equals("DIVIDE")) {
                 this.eat("DIVIDE");
-                result = (Integer) result / (Integer) this.factor();
             }
+
+            node = new BinOp(node, token, this.factor());
         }
 
-        return result;
+        return node;
     }
+
+    public ASTree expr(){
+
+
+        ASTree node = this.term();
+
+        while(this.currentToken.type.equals("PLUS") || this.currentToken.type.equals("MINUS")){
+            Token token = this.currentToken;
+            if(token.type.equals("PLUS")) {
+                this.eat("PLUS");
+            } else if(token.type.equals("MINUS")) {
+                this.eat("MINUS");
+            }
+
+            node = new BinOp(node, token, this.term());
+        }
+
+        return node;
+    }
+
+    public ASTree parse(){
+        return this.expr();
+    }
+
+
 
 
 }

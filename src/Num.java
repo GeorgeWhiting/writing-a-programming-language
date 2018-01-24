@@ -7,5 +7,4 @@ public class Num extends ASTree{
         this.token = token;
         this.value = token.value;
     }
-
 }

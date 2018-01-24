@@ -1,15 +1,13 @@
 public class BinOp extends ASTree{
 
-    public Object left;
-    public Object right;
+    public ASTree left;
+    public ASTree right;
     public Token op;
 
 
-    public BinOp(Object left, Token op, Object right){
+    public BinOp(ASTree left, Token op, ASTree right){
         this.left = left;
         this.op = op;
         this.right = right;
-
     }
-
 }
