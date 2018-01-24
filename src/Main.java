@@ -14,8 +14,9 @@ public class Main {
                 break;
             }
             Lexer lexer = new Lexer(input);
-            Interpreter interpreter = new Interpreter(lexer);
-            Object result = interpreter.expr();
+            Parser parser = new Parser(lexer);
+            Interpreter interpreter = new Interpreter(parser);
+            Object result = parser.expr();
             System.out.println(result);
         }
     }
