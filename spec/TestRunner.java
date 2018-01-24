@@ -25,6 +25,7 @@ public class TestRunner {
         new Test("1 + 2 + 3", 6, testArray);
         new Test("1 + 5", "1", testArray);
         new Test("713 + 1230", "713", testArray);
+        new Test("1 + 2 * 2", 5, testArray);
         runTests(testArray);
     }
 
