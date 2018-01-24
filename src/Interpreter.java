@@ -15,7 +15,6 @@ public class Interpreter{
     }
 
     private void eat(String tokenType){
-       // System.out.println(this.currentToken.type);
         if(this.currentToken.type.equals(tokenType)){
             this.currentToken = this.lexer.getNextToken();
         } else {
@@ -54,11 +53,14 @@ public class Interpreter{
 
         Object result = this.factor();
 
-        while(this.currentToken.type.equals("MULTIPLY")) {
+        while(this.currentToken.type.equals("MULTIPLY") || this.currentToken.type.equals("DIVIDE")){
             Token token = this.currentToken;
             if (token.type.equals("MULTIPLY")) {
                 this.eat("MULTIPLY");
                 result = (Integer) result * (Integer) this.factor();
+            } else if(token.type.equals("DIVIDE")) {
+                this.eat("DIVIDE");
+                result = (Integer) result / (Integer) this.factor();
             }
         }
 
