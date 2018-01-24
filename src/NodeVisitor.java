@@ -7,15 +7,15 @@ public class NodeVisitor {
         String methodName = "visit" + node.getClass().getSimpleName();
         Method visitor = null;
         try {
-            visitor = Interpreter.class.getMethod(methodName, (Class<?>[]) null);
+            visitor = Interpreter.class.getMethod(methodName, ASTree.class);
         } catch(NoSuchMethodException e) {
-            throw new java.lang.RuntimeException("No such method: " + methodName + " found in " + Interpreter.class.toString() + " class");
+            throw new java.lang.RuntimeException(e + "No such method " + methodName + " found in " + Interpreter.class.toString());
         }
 
         try {
             return visitor.invoke(this, node);
         } catch(IllegalAccessException | InvocationTargetException e) {
-            throw new java.lang.RuntimeException("Error when attempting to invoke " + methodName + " on " + this.toString());
+            throw new java.lang.RuntimeException(e + " error when attempting to invoke " + methodName + " on " + this.toString());
         }
 
     }
