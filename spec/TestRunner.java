@@ -18,12 +18,13 @@ public class TestRunner {
         new Test("3 + 3", 6, testArray);
         new Test("333 + 333", 666, testArray);
         new Test("1    +   1", 2, testArray);
-        new Test("1 + 1  ", 2, testArray);
         new Test("1111 + 1111", 2222, testArray);
         new Test("3 - 1", 2, testArray);
         new Test("3*3", 9, testArray);
         new Test("    6 * 12", 72, testArray);
         new Test("1 + 2 + 3", 6, testArray);
+        new Test("1 + 5", "1", testArray);
+        new Test("713 + 1230", "713", testArray);
         runTests(testArray);
     }
 
