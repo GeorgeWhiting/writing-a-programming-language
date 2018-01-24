@@ -13,10 +13,10 @@ public class Main {
                 System.out.println("Stopping....");
                 break;
             }
-            Interpreter interpreter = new Interpreter(input);
+            Lexer lexer = new Lexer(input);
+            Interpreter interpreter = new Interpreter(lexer);
             Object result = interpreter.expr();
             System.out.println(result);
         }
-
     }
 }
