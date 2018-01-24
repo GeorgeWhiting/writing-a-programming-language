@@ -23,6 +23,7 @@ public class TestRunner {
         new Test("3 - 1", 2, testArray);
         new Test("3*3", 9, testArray);
         new Test("    6 * 12", 72, testArray);
+        new Test("1 + 2 + 3", 6, testArray);
         runTests(testArray);
     }
 
