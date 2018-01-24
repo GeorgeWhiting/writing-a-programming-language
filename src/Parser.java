@@ -34,7 +34,7 @@ public class Parser {
         return node;
     }
 
-    public ASTree term(){
+    private ASTree term(){
 
 
         ASTree node = this.factor();

@@ -16,7 +16,7 @@ public class Main {
             Lexer lexer = new Lexer(input);
             Parser parser = new Parser(lexer);
             Interpreter interpreter = new Interpreter(parser);
-            Object result = parser.expr();
+            Object result = interpreter.interpret();
             System.out.println(result);
         }
     }

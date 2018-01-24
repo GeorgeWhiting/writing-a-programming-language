@@ -31,6 +31,7 @@ public class TestRunner {
         new Test("1+((3*3)+4)", 14, testArray);
         new Test("1+((3/3)*4)", 5, testArray);
         new Test("(1+((3/3)*4))+3", 8, testArray);
+        new Test("2*(1+1)", 4, testArray);
         runTests(testArray);
     }
 
