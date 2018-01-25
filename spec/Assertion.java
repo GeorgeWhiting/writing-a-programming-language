@@ -4,8 +4,9 @@ public class Assertion {
         if(expect instanceof Integer) {
 
             Lexer lexer = new Lexer(test);
-            Interpreter testInterpreter = new Interpreter(lexer);
-            Object result = testInterpreter.expr();
+            Parser parser = new Parser(lexer);
+            Interpreter testInterpreter = new Interpreter(parser);
+            Object result = parser.expr();
             return (result.equals(expect) ? "TEST PASSED" : "TEST FAILED: expected " + expect.toString() + " got " + String.valueOf(result));
 
         } else if(expect instanceof String) {

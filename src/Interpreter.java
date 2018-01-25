@@ -1,78 +1,43 @@
-public class Interpreter{
+public class Interpreter extends NodeVisitor {
     private Integer pos;
-    private Token currentToken;
     private char currentChar;
-    private Lexer lexer;
+    private Parser parser;
 
 
-    Interpreter(Lexer lexer){
-        this.lexer = lexer;
-        this.currentToken = this.lexer.getNextToken();
+    Interpreter(Parser parser){
+        this.parser = parser;
     }
 
-    private void error(){
-        throw new java.lang.RuntimeException("Invalid syntax");
-    }
-
-    private void eat(String tokenType){
-        if(this.currentToken.type.equals(tokenType)){
-            this.currentToken = this.lexer.getNextToken();
+    public Object visitBinOp(BinOp node) {
+        if (node.op.type.equals("PLUS")) {
+            return (Integer) this.visit(node.left) + (Integer) this.visit(node.right);
+        } else if (node.op.type.equals("MINUS")) {
+            return (Integer) this.visit(node.left) - (Integer) this.visit(node.right);
+        } else if (node.op.type.equals("MULTIPLY")) {
+            return (Integer) this.visit(node.left) * (Integer) this.visit(node.right);
+        } else if (node.op.type.equals("DIVIDE")) {
+            return (Integer) this.visit(node.left) / (Integer) this.visit(node.right);
         } else {
-            this.error();
+            throw new java.lang.RuntimeException(node.op.type + " is not an accepted operator");
         }
     }
 
-    private Object factor() {
-        Object result = null;
-        Token token = this.currentToken;
-        if (token.type == "INT") {
-            this.eat("INT");
-            result = token.value;
-        } else if (token.type == "LPAREN") {
-            this.eat("LPAREN");
-            result = this.expr();
-            this.eat("RPAREN");
-        }
-        return result;
+    public void visitBinOp(ASTree node) {
+        System.out.println("CAT");
     }
 
-    public Object expr(){
-
-
-        Object result = this.term();
-
-        while(this.currentToken.type.equals("PLUS") || this.currentToken.type.equals("MINUS")){
-            Token token = this.currentToken;
-            if(token.type.equals("PLUS")) {
-                this.eat("PLUS");
-                result = (Integer) result + (Integer) this.term();
-            } else if(token.type.equals("MINUS")) {
-                this.eat("MINUS");
-                result = (Integer) result - (Integer) this.term();
-            }
-        }
-
-        return result;
+    public Object visitNum(Num node) {
+        return node.value;
     }
 
-    public Object term(){
-
-
-        Object result = this.factor();
-
-        while(this.currentToken.type.equals("MULTIPLY") || this.currentToken.type.equals("DIVIDE")){
-            Token token = this.currentToken;
-            if (token.type.equals("MULTIPLY")) {
-                this.eat("MULTIPLY");
-                result = (Integer) result * (Integer) this.factor();
-            } else if(token.type.equals("DIVIDE")) {
-                this.eat("DIVIDE");
-                result = (Integer) result / (Integer) this.factor();
-            }
-        }
-
-        return result;
+    public Object interpret() {
+        ASTree tree = this.parser.parse();
+        return this.visit(tree);
     }
+
+//    private void error(){
+//        throw new java.lang.RuntimeException("Invalid syntax");
+//    }
 
 }
 
