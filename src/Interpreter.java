@@ -22,10 +22,6 @@ public class Interpreter extends NodeVisitor {
         }
     }
 
-    public void visitBinOp(ASTree node) {
-        System.out.println("CAT");
-    }
-
     public Object visitNum(Num node) {
         return node.value;
     }
@@ -39,6 +35,13 @@ public class Interpreter extends NodeVisitor {
 //        throw new java.lang.RuntimeException("Invalid syntax");
 //    }
 
+    public ASTree visit_UnaryOp(ASTree node) {
+        Token op = node.op.type;
+        if (op.type == "PLUS") {
+            return +this.visit(node.expr());
+        } else if (op.type == "MINUS") {
+            return -this.visit(node.expr());
+        }
+        return null;
+    }
 }
-
-
