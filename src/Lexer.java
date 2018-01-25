@@ -1,5 +1,4 @@
-import java.util.*;
-
+import java.util.HashMap;
 
 public class Lexer {
 
@@ -7,25 +6,23 @@ public class Lexer {
     private Integer pos;
     private Token currentToken;
     private char currentChar;
-    public HashMap<String, Token> RESERVED_KEYWORDS = new HashMap<String, Token>();
-
-    RESERVED_KEYWORDS.put("PLEASE", new Token("PLEASE", "PLEASE"));
-    RESERVED_KEYWORDS.put("THANKS", new Token("THANKS", "THANKS"));
+    public HashMap<String, Token> reservedKeywords = new HashMap<String, Token>();
 
     Lexer(String text) {
         this.text = text;
         this.pos = 0;
         this.currentChar = this.text.charAt(this.pos);
-
+        reservedKeywords.put("PLEASE", new Token("PLEASE", "PLEASE"));
+        reservedKeywords.put("THANKS", new Token("THANKS", "THANKS"));
     }
 
-    private Token _id() {
+    private Token id() {
         String result = "";
         while((this.currentChar != '\0') && (Character.isLetterOrDigit(this.currentChar))){
             result += this.currentChar;
             this.advanceCounter();
         }
-        return RESERVED_KEYWORDS.get(result);
+        return reservedKeywords.get(result);
     }
 
     private void error(){
@@ -56,12 +53,12 @@ public class Lexer {
         return Integer.parseInt(integerInProgress);
     }
 
-    private char peek(){
-        Integer peek_pos = this.pos +1;
-        if (peek_pos > this.text.length() -1) {
+    private char peep(){
+        Integer peep_pos = this.pos +1;
+        if (peep_pos > this.text.length() -1) {
             return '\0';
         } else {
-            return this.text.charAt(peek_pos);
+            return this.text.charAt(peep_pos);
         }
     }
 
@@ -110,13 +107,30 @@ public class Lexer {
             }
 
             // checks for keywords
-            if (Character.isLetterOrDigit(this.currentChar)) {
-                return this._id();
+            if (Character.isLetter(this.currentChar)) {
+                return this.id();
             }
 
             if (this.currentChar == ';'){
                 this.advanceCounter();
                 Token token = new Token("SEMI", currentChar);
+                return token;
+            }
+
+            if (this.currentChar == '=' && this.peep() == '='){
+                this.advanceCounter();
+                this.advanceCounter();
+                return new Token("EQUALITY", "==");
+            }
+
+            if (this.currentChar == '='){
+                this.advanceCounter();
+                return new Token("ASSIGN", currentChar);
+            }
+            
+            if (this.currentChar == '.'){
+                this.advanceCounter();
+                Token token = new Token("DOT", currentChar);
                 return token;
             }
 
