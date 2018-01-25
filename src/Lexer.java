@@ -127,7 +127,7 @@ public class Lexer {
                 this.advanceCounter();
                 return new Token("ASSIGN", currentChar);
             }
-            
+
             if (this.currentChar == '.'){
                 this.advanceCounter();
                 Token token = new Token("DOT", currentChar);

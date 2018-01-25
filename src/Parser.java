@@ -100,6 +100,7 @@ public class Parser {
         ArrayList nodes;
         this.eat("PLEASE");
         nodes = this.statementList();
+        System.out.println("mark 2");
         this.eat("THANKS");
 
         Compound root = new Compound();
@@ -142,7 +143,7 @@ public class Parser {
     }
 
     public ASTree assignmentStatement(){
-        ASTree left;
+        Var left;
         ASTree right;
         Token token;
         ASTree node;
@@ -156,8 +157,8 @@ public class Parser {
         return node;
     }
 
-    public ASTree variable(){
-        ASTree node = new Var(this.currentToken);
+    public Var variable(){
+        Var node = new Var(this.currentToken);
         this.eat("ID");
 
         return node;
