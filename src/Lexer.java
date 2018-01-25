@@ -1,15 +1,31 @@
+import java.util.*;
+
+
 public class Lexer {
 
     private String text;
     private Integer pos;
     private Token currentToken;
     private char currentChar;
+    public HashMap<String, Token> RESERVED_KEYWORDS = new HashMap<String, Token>();
+
+    RESERVED_KEYWORDS.put("PLEASE", new Token("PLEASE", "PLEASE"));
+    RESERVED_KEYWORDS.put("THANKS", new Token("THANKS", "THANKS"));
 
     Lexer(String text) {
         this.text = text;
         this.pos = 0;
         this.currentChar = this.text.charAt(this.pos);
 
+    }
+
+    private Token _id() {
+        String result = "";
+        while((this.currentChar != '\0') && (Character.isLetterOrDigit(this.currentChar))){
+            result += this.currentChar;
+            this.advanceCounter();
+        }
+        return RESERVED_KEYWORDS.get(result);
     }
 
     private void error(){
@@ -39,6 +55,16 @@ public class Lexer {
         }
         return Integer.parseInt(integerInProgress);
     }
+
+    private char peek(){
+        Integer peek_pos = this.pos +1;
+        if (peek_pos > this.text.length() -1) {
+            return '\0';
+        } else {
+            return this.text.charAt(peek_pos);
+        }
+    }
+
 
     public Token getNextToken(){
 
@@ -82,6 +108,18 @@ public class Lexer {
                 Token token = new Token("RPAREN", currentChar);
                 return token;
             }
+
+            // checks for keywords
+            if (Character.isLetterOrDigit(this.currentChar)) {
+                return this._id();
+            }
+
+            if (this.currentChar == ';'){
+                this.advanceCounter();
+                Token token = new Token("SEMI", currentChar);
+                return token;
+            }
+
             else {
                 this.error();
             }
