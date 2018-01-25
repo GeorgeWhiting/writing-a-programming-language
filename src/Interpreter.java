@@ -35,12 +35,13 @@ public class Interpreter extends NodeVisitor {
 //        throw new java.lang.RuntimeException("Invalid syntax");
 //    }
 
-    public ASTree visit_UnaryOp(ASTree node) {
-        Token op = node.op.type;
-        if (op.type == "PLUS") {
-            return +this.visit(node.expr());
-        } else if (op.type == "MINUS") {
-            return -this.visit(node.expr());
+    public Object visit_UnaryOp(UnaryOp node) {
+        String op = node.op.type;
+        Object calcVal = this.visit(node.expression);
+        if (op.equals("PLUS")) {
+            return calcVal;
+        } else if (op.equals("MINUS")) {
+            return -(Integer) calcVal;
         }
         return null;
     }

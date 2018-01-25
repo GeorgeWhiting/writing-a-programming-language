@@ -36,6 +36,8 @@ public class NodeVisitor {
             return interpOb.visitBinOp((BinOp) node);
         } else if(nodeType.equals("Num")) {
             return interpOb.visitNum((Num) node);
+        } else if(nodeType.equals("UnaryOp")) {
+            return interpOb.visit_UnaryOp((UnaryOp) node);
         } else {
             throw new java.lang.RuntimeException("Unrecognised node type");
         }

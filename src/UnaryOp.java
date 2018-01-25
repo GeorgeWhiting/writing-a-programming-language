@@ -1,10 +1,10 @@
 public class UnaryOp extends ASTree {
 
     public Token op;
-    public ASTree expr;
+    public ASTree expression;
 
-    public UnaryOp(Token op, ASTree expr){
+    public UnaryOp(Token op, ASTree expression){
         this.op = op;
-        this.expr = expr;
+        this.expression = expression;
     }
 }
