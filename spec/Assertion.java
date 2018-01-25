@@ -6,7 +6,7 @@ public class Assertion {
             Lexer lexer = new Lexer(test);
             Parser parser = new Parser(lexer);
             Interpreter testInterpreter = new Interpreter(parser);
-            Object result = parser.expr();
+            Object result = testInterpreter.interpret();
             return (result.equals(expect) ? "TEST PASSED" : "TEST FAILED: expected " + expect.toString() + " got " + String.valueOf(result));
 
         } else if(expect instanceof String) {

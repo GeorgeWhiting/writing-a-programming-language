@@ -30,6 +30,8 @@ public class TestRunner {
         new Test("1+((3*3)+4)", 14, testBasicMath);
         new Test("1+((3/3)*4)", 5, testBasicMath);
         new Test("(1+((3/3)*4))+3", 8, testBasicMath);
+        new Test("-3 + 5", 2, testBasicMath);
+        new Test("5 * -(1+3)", -20, testBasicMath);
         runTests(testBasicMath);
         new Test("1 + 5", "1", testToken);
         new Test("713 + 1230", "713", testToken);
