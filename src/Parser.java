@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class Parser {
 
         public Lexer lexer;
@@ -23,6 +24,7 @@ public class Parser {
     private ASTree factor() {
         Token token = this.currentToken;
         ASTree node = null;
+
         if (token.type.equals("PLUS")){
             this.eat("PLUS");
             node = new UnaryOp(token, this.factor());
@@ -36,6 +38,8 @@ public class Parser {
             this.eat("LPAREN");
             node = this.expr();
             this.eat("RPAREN");
+        } else {
+            node = this.variable();
         }
         return node;
     }
@@ -79,10 +83,88 @@ public class Parser {
     }
 
     public ASTree parse(){
-        return this.expr();
+        ASTree node = this.program();
+        if (!this.currentToken.type.equals("EOF")){
+            this.error();
+        }
+        return node;
     }
 
+    public ASTree program(){
+        ASTree node = this.compoundStatement();
+        this.eat("DOT");
+        return node;
+    }
 
+    public ASTree compoundStatement(){
+        ArrayList nodes;
+        this.eat("PLEASE");
+        nodes = this.statementList();
+        this.eat("THANKS");
 
+        Compound root = new Compound();
+        for(int i = 0; i < nodes.size(); i++ ){
+            root.children.add(nodes.get(i));
+        }
+
+        return root;
+    }
+
+    public ArrayList statementList(){
+        ASTree node = this.statement();
+
+        ArrayList results = new ArrayList();
+        results.add(node);
+
+        while(this.currentToken.type.equals("SEMI")){
+            this.eat("SEMI");
+            results.add(this.statement());
+        }
+
+        if(this.currentToken.type.equals("ID")){
+            this.error();
+        }
+
+        return results;
+    }
+
+    public ASTree statement(){
+        ASTree node;
+        if(this.currentToken.type.equals("PLEASE")){
+            node = this.compoundStatement();
+        } else if (this.currentToken.type.equals("ID")){
+            node = this.assignmentStatement();
+        } else {
+            node = this.empty();
+        }
+
+        return node;
+    }
+
+    public ASTree assignmentStatement(){
+        ASTree left;
+        ASTree right;
+        Token token;
+        ASTree node;
+
+        left = this.variable();
+        token = this.currentToken;
+        this.eat("ASSIGN");
+        right = this.expr();
+        node = new Assign(left, token, right);
+
+        return node;
+    }
+
+    public ASTree variable(){
+        ASTree node = new Var(this.currentToken);
+        this.eat("ID");
+
+        return node;
+    }
+
+    public ASTree empty(){
+        return new NoOp();
+    }
 
 }
