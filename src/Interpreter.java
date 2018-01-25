@@ -22,6 +22,10 @@ public class Interpreter extends NodeVisitor {
         }
     }
 
+    public void visitBinOp(ASTree node) {
+        System.out.println("CAT");
+    }
+
     public Object visitNum(Num node) {
         return node.value;
     }
