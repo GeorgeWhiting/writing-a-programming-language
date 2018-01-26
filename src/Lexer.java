@@ -12,8 +12,9 @@ public class Lexer {
         this.text = text;
         this.pos = 0;
         this.currentChar = this.text.charAt(this.pos);
-        reservedKeywords.put("PLEASE", new Token("PLEASE", "PLEASE"));
-        reservedKeywords.put("THANKS", new Token("THANKS", "THANKS"));
+        reservedKeywords.put("please", new Token("PLEASE", "PLEASE"));
+        reservedKeywords.put("thanks", new Token("THANKS", "THANKS"));
+        reservedKeywords.put("say", new Token("SAY", "SAY"));
     }
 
     private Token id() {
