@@ -48,12 +48,14 @@ public class Parser {
 
         ASTree node = this.factor();
 
-        while(this.currentToken.type.equals("MULTIPLY") || this.currentToken.type.equals("DIVIDE")){
+        while(this.currentToken.type.equals("MULTIPLY") || this.currentToken.type.equals("DIVIDE") || this.currentToken.type.equals("MOD")){
             Token token = this.currentToken;
             if (token.type.equals("MULTIPLY")) {
                 this.eat("MULTIPLY");
             } else if(token.type.equals("DIVIDE")) {
                 this.eat("DIVIDE");
+            } else if (token.type.equals("MOD")) {
+                this.eat("MOD");
             }
 
             node = new BinOp(node, token, this.factor());

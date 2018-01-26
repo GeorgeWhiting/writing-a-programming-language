@@ -17,6 +17,8 @@ public class Interpreter extends NodeVisitor {
             return (Integer) this.visit(node.left) * (Integer) this.visit(node.right);
         } else if (node.op.type.equals("DIVIDE")) {
             return (Integer) this.visit(node.left) / (Integer) this.visit(node.right);
+        } else if (node.op.type.equals("MOD")) {
+            return (Integer) this.visit(node.left) % (Integer) this.visit(node.right);
         } else {
             throw new java.lang.RuntimeException(node.op.type + " is not an accepted operator");
         }

@@ -99,6 +99,11 @@ public class Lexer {
                 Token token = new Token("DIVIDE", currentChar);
                 return token;
             }
+            if (this.currentChar == '%') {
+                this.advanceCounter();
+                Token token = new Token("MOD", currentChar);
+                return token;
+            }
             if (this.currentChar == '(') {
                 this.advanceCounter();
                 Token token = new Token("LPAREN", currentChar);
