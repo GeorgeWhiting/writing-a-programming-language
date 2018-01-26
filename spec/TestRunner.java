@@ -3,15 +3,6 @@ import java.util.*;
 
 public class TestRunner {
 
-    private static void runTests(ArrayList<Test> array) {
-        for(int i = 1; i < array.size() + 1; i++) {
-            System.out.println("Test " + i );
-            String toPrint = Assertion.assertTest(array.get(i-1).assertion, array.get(i-1).expected);
-            System.out.println(toPrint);
-            System.out.println();
-        }
-    }
-
     public static void main(String[] args) {
         System.out.println("Lexer identifies tokens test");
         Lexer lexer = new Lexer("please thanks say var 3 + - * / ( ) ; == = .");
