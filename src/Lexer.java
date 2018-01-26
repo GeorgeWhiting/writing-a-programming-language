@@ -22,7 +22,11 @@ public class Lexer {
             result += this.currentChar;
             this.advanceCounter();
         }
-        return reservedKeywords.get(result);
+        if (reservedKeywords.get(result) != null){
+            return reservedKeywords.get(result);
+        } else {
+            return new Token("ID", result);
+        }
     }
 
     private void error(){
@@ -66,7 +70,6 @@ public class Lexer {
     public Token getNextToken(){
 
         while(this.currentChar != '\0'){
-
             if(Character.isWhitespace(this.currentChar)){
                 this.whitespaceSkipper();
                 continue;

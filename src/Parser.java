@@ -100,7 +100,6 @@ public class Parser {
         ArrayList nodes;
         this.eat("PLEASE");
         nodes = this.statementList();
-        System.out.println("mark 2");
         this.eat("THANKS");
 
         Compound root = new Compound();
@@ -131,6 +130,8 @@ public class Parser {
 
     public ASTree statement(){
         ASTree node;
+        System.out.println(this.currentToken);
+        System.out.println(this.currentToken.type);
         if(this.currentToken.type.equals("PLEASE")){
             node = this.compoundStatement();
         } else if (this.currentToken.type.equals("ID")){

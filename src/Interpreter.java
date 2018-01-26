@@ -59,10 +59,6 @@ public class Interpreter extends NodeVisitor {
         }
     }
 
-//    private void error(){
-//        throw new java.lang.RuntimeException("Invalid syntax");
-//    }
-
     public Object visitUnaryOp(UnaryOp node) {
         String op = node.op.type;
         Object calcVal = this.visit(node.expression);
