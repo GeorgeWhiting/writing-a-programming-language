@@ -24,7 +24,6 @@ public class Parser {
     private ASTree factor() {
         Token token = this.currentToken;
         ASTree node = null;
-
         if (token.type.equals("PLUS")){
             this.eat("PLUS");
             node = new UnaryOp(token, this.factor());
@@ -130,15 +129,26 @@ public class Parser {
 
     public ASTree statement(){
         ASTree node;
-        System.out.println(this.currentToken);
-        System.out.println(this.currentToken.type);
         if(this.currentToken.type.equals("PLEASE")){
             node = this.compoundStatement();
         } else if (this.currentToken.type.equals("ID")){
             node = this.assignmentStatement();
+        } else if (this.currentToken.type.equals("SAY")){
+            node = this.sayerStatement();
         } else {
             node = this.empty();
         }
+
+        return node;
+    }
+
+    public ASTree sayerStatement(){
+
+        ASTree right;
+        ASTree node;
+        this.eat("SAY");
+        right = this.expr();
+        node = new Sayer(right);
 
         return node;
     }

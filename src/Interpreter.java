@@ -59,7 +59,7 @@ public class Interpreter extends NodeVisitor {
         }
     }
 
-    public Object visitUnaryOp(UnaryOp node) {
+    public Object visitUnaryOp(UnaryOp node){
         String op = node.op.type;
         Object calcVal = this.visit(node.expression);
         if (op.equals("PLUS")) {
@@ -68,5 +68,9 @@ public class Interpreter extends NodeVisitor {
             return -(Integer) calcVal;
         }
         return null;
+    }
+
+    public void visitSayer(Sayer node){
+       System.out.println(this.visit(node.right));
     }
 }

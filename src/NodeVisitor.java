@@ -46,8 +46,11 @@ public class NodeVisitor {
             return null;
         } else if (nodeType.equals("Var")) {
             return interpOb.visitVar((Var) node);
-        } else if (nodeType.equals("NoOp")){
+        } else if (nodeType.equals("NoOp")) {
             interpOb.visitNoOp((NoOp) node);
+            return null;
+        } else if (nodeType.equals("Sayer")) {
+            interpOb.visitSayer((Sayer) node);
             return null;
         } else {
             throw new java.lang.RuntimeException("Unrecognised node type");
