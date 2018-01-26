@@ -5,7 +5,7 @@ public class Lexer {
     private String text;
     private Integer pos;
     private Token currentToken;
-    private char currentChar;
+    public char currentChar;
     public HashMap<String, Token> reservedKeywords = new HashMap<String, Token>();
 
     Lexer(String text) {
