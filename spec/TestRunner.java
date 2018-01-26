@@ -4,6 +4,9 @@ import java.util.*;
 public class TestRunner {
 
     public static void main(String[] args) {
+
+        Interpreter interpreter = new Interpreter();
+
         System.out.println("Lexer identifies tokens test");
         Lexer lexer = new Lexer("please thanks say var 3 + - * / ( ) ; == = .");
         ArrayList<String> tokenNames = new ArrayList();
@@ -34,9 +37,8 @@ public class TestRunner {
         System.out.println("Interpreter assigns correct values from the abstract syntax tree");
         Lexer lexer3 = new Lexer("please a = 1 + 1; b = 3 * (1 + 2); c = a * b; thanks.");
         Parser parser3 = new Parser(lexer3);
-        Interpreter interpreter3 = new Interpreter(parser3);
-        interpreter3.interpret();
-        HashMap<Object, Object> symbolTable = interpreter3.symbolTable;
+        interpreter.interpret(parser3);
+        HashMap<Object, Object> symbolTable = interpreter.symbolTable;
 
         ArrayList<Object> expected3 = new ArrayList<>(Arrays.asList(2, 9, 18));
         ArrayList<Object> symbolTableValues = new ArrayList<>();

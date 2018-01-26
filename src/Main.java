@@ -6,6 +6,7 @@ public class Main {
         String input;
         String replInput = "MOM >> ";
         Scanner reader = new Scanner(System.in);
+        Interpreter interpreter = new Interpreter();
         System.out.println("Type in stop or quit to end process");
 
         while(true) {
@@ -30,9 +31,8 @@ public class Main {
                 }
                 Lexer lexer = new Lexer(longInput);
                 Parser parser = new Parser(lexer);
-                Interpreter interpreter = new Interpreter(parser);
                 try {
-                    Object result = interpreter.interpret();
+                    Object result = interpreter.interpret(parser);
                 } catch(Exception e) {
                     System.out.println(e.getMessage());
                     System.out.println("Mom is not pleased...");
@@ -40,9 +40,8 @@ public class Main {
             }  else {
                 Lexer lexer = new Lexer(input);
                 Parser parser = new Parser(lexer);
-                Interpreter interpreter = new Interpreter(parser);
                 try {
-                    interpreter.interpret();
+                    interpreter.interpret(parser);
                 } catch(Exception e) {
                     System.out.println(e.getMessage());
                     System.out.println("Mom is not pleased...");

@@ -4,8 +4,7 @@ public class Interpreter extends NodeVisitor {
     private Parser parser;
     public HashMap<Object, Object> symbolTable;
 
-    Interpreter(Parser parser){
-        this.parser = parser;
+    Interpreter(){
         this.symbolTable = new HashMap<>();
     }
 
@@ -27,7 +26,8 @@ public class Interpreter extends NodeVisitor {
         return node.value;
     }
 
-    public Object interpret() {
+    public Object interpret(Parser parser) {
+        this.parser = parser;
         ASTree tree = this.parser.parse();
         return this.visit(tree);
     }
