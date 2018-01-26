@@ -23,7 +23,7 @@ public class Parser {
 
     private ASTree factor() {
         Token token = this.currentToken;
-        ASTree node = null;
+        ASTree node;
         if (token.type.equals("PLUS")){
             this.eat("PLUS");
             node = new UnaryOp(token, this.factor());

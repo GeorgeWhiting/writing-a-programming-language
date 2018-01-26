@@ -1,14 +1,12 @@
 import java.util.HashMap;
 
 public class Interpreter extends NodeVisitor {
-    private Integer pos;
-    private char currentChar;
     private Parser parser;
     public HashMap<Object, Object> symbolTable;
 
     Interpreter(Parser parser){
         this.parser = parser;
-        this.symbolTable = new HashMap<Object, Object>();
+        this.symbolTable = new HashMap<>();
     }
 
     public Object visitBinOp(BinOp node) {

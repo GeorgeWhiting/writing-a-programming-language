@@ -4,9 +4,9 @@ public class Lexer {
 
     private String text;
     private Integer pos;
-    private Token currentToken;
+
     public char currentChar;
-    public HashMap<String, Token> reservedKeywords = new HashMap<String, Token>();
+    public HashMap<String, Token> reservedKeywords = new HashMap<>();
 
     Lexer(String text) {
         this.text = text;
