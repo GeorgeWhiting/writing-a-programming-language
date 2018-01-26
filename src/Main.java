@@ -7,8 +7,6 @@ public class Main {
         String replInput = "MOM >> ";
         Scanner reader = new Scanner(System.in);
         System.out.println("Type in stop or quit to end process");
-        int skullbone = 9760;
-        String s = Character.toString((char) skullbone);
 
         while(true) {
             System.out.print(replInput);
@@ -36,7 +34,8 @@ public class Main {
                 try {
                     Object result = interpreter.interpret();
                 } catch(Exception e) {
-                    System.out.println(s + " " + e);
+                    System.out.println(e.getMessage());
+                    System.out.println("Mom is not pleased...");
                 }
             }  else {
                 Lexer lexer = new Lexer(input);
@@ -45,7 +44,8 @@ public class Main {
                 try {
                     interpreter.interpret();
                 } catch(Exception e) {
-                    System.out.println(s + " " + e);
+                    System.out.println(e.getMessage());
+                    System.out.println("Mom is not pleased...");
                 }
             }
         }
