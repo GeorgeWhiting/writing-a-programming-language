@@ -60,8 +60,4 @@ java TestRunner
 Tests cover the three parts of the Interpreter, that is the Lexer, the Parser and finally the Interpreter.
 
 ## Authors
-* [Tom Allpress](https://github.com/tallpress)
-* [Umair Bashir](https://github.com/umairb1)
-* [Lars Finlay](https://github.com/LarsFin)
-* [James Lizamore](https://github.com/Meepit)
-* [George Whiting](https://github.com/GeorgeWhiting)
+[Tom Allpress](https://github.com/tallpress), [Umair Bashir](https://github.com/umairb1), [Lars Finlay](https://github.com/LarsFin), [James Lizamore](https://github.com/Meepit), [George Whiting](https://github.com/GeorgeWhiting)
